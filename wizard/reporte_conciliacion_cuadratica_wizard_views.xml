@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="reporte_conciliacion_wizard" model="ir.ui.view">
+        <field name="name">conciliacion_cuadratica.reporte_conciliacion_wizard</field>
+        <field name="model">conciliacion_cuadratica.reporte_conciliacion_wizard</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Seleccione diario y año">
+                
+                <group>
+                    <field name="diario_id"/>
+                    <field name="year"/>
+                </group>
+                    <group string="Otros Ajustes">
+                    <field name="otros_ajustes_ids">
+                        <tree editable="bottom">
+                            <field name="tipo"/>
+                            <field name="descripcion"/>
+                            <field name="amount"/>
+                            <field name="date"/>
+                        </tree>
+                    </field>
+                </group>
+                <group>
+                    <field name="name" invisible="1"/>
+                    <field name="archivo" readonly="1" filename="name"/>
+                </group>
+                <footer>
+                    <button name="print_report_excel" string="Reporte Excel" type="object" class="oe_highlight"/>
+                    <button special="cancel" string="Cancel" class="oe_link"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="window_reporte_conciliacion" model="ir.actions.act_window">
+        <field name="name">Reporte Conciliación Cuadrática</field>
+        <field name="res_model">conciliacion_cuadratica.reporte_conciliacion_wizard</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="reporte_conciliacion_wizard"/>
+        <field name="target">new</field>
+    </record>
+    
+    <menuitem action="window_reporte_conciliacion" id="menu_reporte_conciliacion_wizard" parent="account.menu_finance_reports"/>
+
+</odoo>
