@@ -10,9 +10,8 @@
                 <field name="ref" position="after">
                     <field name="tipo_conciliacion_cuadratica" invisible="payment_type != 'inbound'"/>
                     <field name="pago_conciliacion_cuadratica" invisible="payment_type != 'outbound'"/>
-                    <field name="cuenta_origen" invisible="tipo_conciliacion_cuadratica == False and pago_conciliacion_cuadratica == False"/>
-                    <field name="banco_origen" invisible="tipo_conciliacion_cuadratica == False and pago_conciliacion_cuadratica == False"/>
-                    <field name="nota"/>
+                    <field name="cuenta_origen_conciliacion_cuadratica" invisible="tipo_conciliacion_cuadratica == False and pago_conciliacion_cuadratica == False"/>
+                    <field name="banco_origen_conciliacion_cuadratica" invisible="tipo_conciliacion_cuadratica == False and pago_conciliacion_cuadratica == False"/>
                 </field>
             </field>
         </record>

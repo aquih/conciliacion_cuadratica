@@ -14,7 +14,7 @@
     'category': 'Uncategorized',
     'version': '0.2',
 
-    'depends': ['website_sale'],
+    'depends': ['l10n_gt_extra'],
 
     'data': [
         'security/ir.model.access.csv',
