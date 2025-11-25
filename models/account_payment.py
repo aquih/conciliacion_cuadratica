@@ -26,15 +26,14 @@ class AccountPayment(models.Model):
             ('Otros Egresos', 'Otros Egresos'),
         ],string="Tipo de conciliación cuadrática de pago")
     
-    cuenta_origen = fields.Many2one('res.partner.bank', string='Cuenta de origen')
-    banco_origen = fields.Many2one('res.bank', string='Banco de origen', related='cuenta_origen.bank_id')
-    nota = fields.Char('Nota')
+    cuenta_origen_conciliacion_cuadratica = fields.Many2one('res.partner.bank', string='Cuenta de origen')
+    banco_origen_conciliacion_cuadratica = fields.Many2one('res.bank', string='Banco de origen', related='cuenta_origen_conciliacion_cuadratica.bank_id')
 
-    @api.constrains('tipo_conciliacion_cuadratica', 'cuenta_origen', 'pago_conciliacion_cuadratica')
+    @api.constrains('tipo_conciliacion_cuadratica', 'cuenta_origen_conciliacion_cuadratica', 'pago_conciliacion_cuadratica')
     def _check_interempresa_fields(self):
         for rec in self:
             if rec.tipo_conciliacion_cuadratica or rec.pago_conciliacion_cuadratica:
-                if not rec.cuenta_origen:
+                if not rec.cuenta_origen_conciliacion_cuadratica:
                     raise ValidationError(_("Debe seleccionar una Cuenta de Origen para pagos Interempresa."))
 
 

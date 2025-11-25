@@ -77,8 +77,8 @@ class ReporteConciliacionCuadraticaWizard(models.TransientModel):
             for dato in cxc_local_exterior_datos:
                 cxc_local_exterior_lines.append({
                     'empresa': dato.partner_id.name,
-                    'banco': dato.banco_origen.name,
-                    'cuenta': dato.cuenta_origen.acc_number,
+                    'banco': dato.banco_origen_conciliacion_cuadratica.name,
+                    'cuenta': dato.cuenta_origen_conciliacion_cuadratica.acc_number,
                     'monto': dato.amount,
                     'mes': dato.date.month,
                 })
@@ -90,8 +90,8 @@ class ReporteConciliacionCuadraticaWizard(models.TransientModel):
             for dato in cxc_socios_datos:
                 cxc_socios_lines.append({
                     'socio': dato.partner_id.name,
-                    'banco': dato.banco_origen.name,
-                    'cuenta': dato.cuenta_origen.acc_number,
+                    'banco': dato.banco_origen_conciliacion_cuadratica.name,
+                    'cuenta': dato.cuenta_origen_conciliacion_cuadratica.acc_number,
                     'monto': dato.amount,
                     'mes': dato.date.month,
                 })
@@ -114,8 +114,8 @@ class ReporteConciliacionCuadraticaWizard(models.TransientModel):
             transfer_interempresa_lines = []
             for dato in transfer_interempresa_datos:
                 transfer_interempresa_lines.append({
-                    'banco': dato.banco_origen.name,
-                    'cuenta': dato.cuenta_origen.acc_number,
+                    'banco': dato.banco_origen_conciliacion_cuadratica.name,
+                    'cuenta': dato.cuenta_origen_conciliacion_cuadratica.acc_number,
                     'monto': dato.amount,
                     'mes': dato.date.month,
                 })
@@ -126,7 +126,7 @@ class ReporteConciliacionCuadraticaWizard(models.TransientModel):
             otros_ingresos_lines = []
             for dato in otros_ingresos_datos:
                 otros_ingresos_lines.append({
-                    'nota': dato.nota,
+                    'nota': dato.descripcion,
                     'monto': dato.amount,
                     'mes': dato.date.month,
                 })
@@ -150,8 +150,8 @@ class ReporteConciliacionCuadraticaWizard(models.TransientModel):
             for dato in prestamos_datos:
                 prestamos_lines.append({
                     'nombre': dato.partner_id.name,
-                    'banco': dato.banco_origen.name,
-                    'cuenta': dato.cuenta_origen.acc_number,
+                    'banco': dato.banco_origen_conciliacion_cuadratica.name,
+                    'cuenta': dato.cuenta_origen_conciliacion_cuadratica.acc_number,
                     'monto': dato.amount,
                     'mes': dato.date.month,
                 })
@@ -160,16 +160,17 @@ class ReporteConciliacionCuadraticaWizard(models.TransientModel):
             dividendos_datos = self.env['report.conciliacion_cuadratica.reporte_conciliacion'].filtrar_datos(base_pagos, 'outbound', pago_conciliacion='dividendos')
             dividendos_mensual = self.env['report.conciliacion_cuadratica.reporte_conciliacion'].obtener_montos_mensuales(dividendos_datos)
             dividendos_lines = []
-            primeros_10_dividendos_lines = dividendos_datos[:2]
+            primeros_10_dividendos_lines = dividendos_datos[:10]
             for dato in primeros_10_dividendos_lines:
                 dividendos_lines.append({
                     'socio': dato.partner_id.name,
-                    'banco': dato.banco_origen.name,
-                    'cuenta': dato.cuenta_origen.acc_number,
+                    'banco': dato.banco_origen_conciliacion_cuadratica.name,
+                    'cuenta': dato.cuenta_origen_conciliacion_cuadratica.acc_number,
                     'monto': dato.amount,
                     'mes': dato.date.month,
                 })
-            if dividendos_datos[2:]:
+            otras_dividendos_mensual = []
+            if dividendos_datos[10:]:
                 otras_dividendos_mensual = self.env['report.conciliacion_cuadratica.reporte_conciliacion'].obtener_montos_mensuales(dividendos_datos[2:])
             total_egresos.append(dividendos_mensual)
 
@@ -179,8 +180,8 @@ class ReporteConciliacionCuadraticaWizard(models.TransientModel):
             for dato in cxp_socios_datos:
                 cxp_socios_lines.append({
                     'socio': dato.partner_id.name,
-                    'banco': dato.banco_origen.name,
-                    'cuenta': dato.cuenta_origen.acc_number,
+                    'banco': dato.banco_origen_conciliacion_cuadratica.name,
+                    'cuenta': dato.cuenta_origen_conciliacion_cuadratica.acc_number,
                     'monto': dato.amount,
                     'mes': dato.date.month,
                 })
@@ -192,8 +193,8 @@ class ReporteConciliacionCuadraticaWizard(models.TransientModel):
             for dato in cxp_relacionadas_locales_datos:
                 cxp_relacionadas_locales_lines.append({
                     'empresa': dato.partner_id.name,
-                    'banco': dato.banco_origen.name,
-                    'cuenta': dato.cuenta_origen.acc_number,
+                    'banco': dato.banco_origen_conciliacion_cuadratica.name,
+                    'cuenta': dato.cuenta_origen_conciliacion_cuadratica.acc_number,
                     'monto': dato.amount,
                     'mes': dato.date.month,
                 })
@@ -205,8 +206,8 @@ class ReporteConciliacionCuadraticaWizard(models.TransientModel):
             for dato in cxp_relacionadas_exterior_datos:
                 cxp_relacionadas_exterior_lines.append({
                     'empresa': dato.partner_id.name,
-                    'banco': dato.banco_origen.name,
-                    'cuenta': dato.cuenta_origen.acc_number,
+                    'banco': dato.banco_origen_conciliacion_cuadratica.name,
+                    'cuenta': dato.cuenta_origen_conciliacion_cuadratica.acc_number,
                     'monto': dato.amount,
                     'mes': dato.date.month,
                 })
@@ -217,8 +218,8 @@ class ReporteConciliacionCuadraticaWizard(models.TransientModel):
             cxp_transfer_interempresa_lines = []
             for dato in cxp_transfer_interempresa_datos:
                 cxp_transfer_interempresa_lines.append({
-                    'banco': dato.banco_origen.name,
-                    'cuenta': dato.cuenta_origen.acc_number,
+                    'banco': dato.banco_origen_conciliacion_cuadratica.name,
+                    'cuenta': dato.cuenta_origen_conciliacion_cuadratica.acc_number,
                     'monto': dato.amount,
                     'mes': dato.date.month,
                 })
@@ -229,7 +230,7 @@ class ReporteConciliacionCuadraticaWizard(models.TransientModel):
             otros_egresos_lines = []
             for dato in otros_egresos_datos:
                 otros_egresos_lines.append({
-                    'nota': dato.nota,
+                    'nota': dato.descripcion,
                     'monto': dato.amount,
                     'mes': dato.date.month,
                 })
@@ -315,6 +316,7 @@ class ReporteConciliacionCuadraticaWizard(models.TransientModel):
             for mes in range(0, 12):
                 hoja.write(18, col, saldo_incial_mensual[mes], formats['numero'])
                 col += 2
+            hoja.write(18, col, sum(saldo_incial_mensual), formats['numero'])
 
             hoja.write('B20', '( + )', formats['bold'])
             hoja.merge_range('C20:E20','DEPÓSITOS', formats['bold'])
@@ -325,6 +327,7 @@ class ReporteConciliacionCuadraticaWizard(models.TransientModel):
             for mes in range(0, 12):
                 hoja.write(20, col, cxc_locales_mensual[mes], formats['numero'])
                 col += 2
+            hoja.write(20, col, sum(cxc_locales_mensual), formats['numero'])
             # Hoja 2 - lineas
             hoja_2 = libro.add_worksheet('Cuentas por Cobrar Clientes Locales')
             hoja_2.write(0, 0, 'Cuentas por Cobrar Clientes Locales', formats['bold'])
@@ -346,6 +349,7 @@ class ReporteConciliacionCuadraticaWizard(models.TransientModel):
             for mes in range(0, 12):
                 hoja.write(21, col, cxc_exterior_mensual[mes], formats['numero'])
                 col += 2
+            hoja.write(21, col, sum(cxc_exterior_mensual), formats['numero'])
             # Hoja 3 - lineas
             hoja_3 = libro.add_worksheet('Cuentas por Cobrar Clientes Exterior')
             hoja_3.write(0, 0, 'Cuentas por Cobrar Clientes Exterior', formats['bold'])
@@ -368,6 +372,7 @@ class ReporteConciliacionCuadraticaWizard(models.TransientModel):
                 hoja.write(22, col, cxc_local_exterior_mensual[mes], formats['numero'])
                 col += 2
             # lineas
+            hoja.write(22, col, sum(cxc_local_exterior_mensual), formats['numero'])
             hoja.write('C24','Empresa', formats['table_subtitle'])
             hoja.write('D24','Banco', formats['table_subtitle'])
             hoja.write('E24','No. Cuenta', formats['table_subtitle'])
@@ -390,6 +395,7 @@ class ReporteConciliacionCuadraticaWizard(models.TransientModel):
             for mes in range(0, 12):
                 hoja.write(fila, col, cxc_socios_mensual[mes], formats['numero'])
                 col += 2
+            hoja.write(fila, col, sum(cxc_socios_mensual), formats['numero'])
             # lineas
             hoja.write(fila+1, 2, 'Nombre del Socio', formats['table_subtitle'])
             hoja.write(fila+1, 3, 'Banco', formats['table_subtitle'])
@@ -413,6 +419,7 @@ class ReporteConciliacionCuadraticaWizard(models.TransientModel):
             for mes in range(0, 12):
                 hoja.write(fila, col, cxc_empleados_mensual[mes], formats['numero'])
                 col += 2
+            hoja.write(fila, col, sum(cxc_empleados_mensual), formats['numero'])
             fila += 1
 
             # --- Anticipo a Clientes --- 
@@ -421,6 +428,7 @@ class ReporteConciliacionCuadraticaWizard(models.TransientModel):
             for mes in range(0, 12):
                 hoja.write(fila, col, anticipo_clientes_mensual[mes], formats['numero'])
                 col += 2
+            hoja.write(fila, col, sum(anticipo_clientes_mensual), formats['numero'])
             fila += 1
 
             # --- Intereses Ganados --- 
@@ -429,6 +437,7 @@ class ReporteConciliacionCuadraticaWizard(models.TransientModel):
             for mes in range(0, 12):
                 hoja.write(fila, col, intereses_ganados_mensual[mes], formats['numero'])
                 col += 2
+            hoja.write(fila, col, sum(intereses_ganados_mensual), formats['numero'])
             fila += 1
 
             # --- CXC Transferencias Interempresa --- 
@@ -437,6 +446,7 @@ class ReporteConciliacionCuadraticaWizard(models.TransientModel):
             for mes in range(0, 12):
                 hoja.write(fila, col, transfer_interempresa_mensual[mes], formats['numero'])
                 col += 2
+            hoja.write(fila, col, sum(transfer_interempresa_mensual), formats['numero'])
             # lineas
             hoja.write(fila+1, 2, 'Banco', formats['table_subtitle'])
             hoja.merge_range(fila+1, 3, fila+1, 4, 'No. De Cuenta ', formats['table_subtitle'])
@@ -458,6 +468,7 @@ class ReporteConciliacionCuadraticaWizard(models.TransientModel):
             for mes in range(0, 12):
                 hoja.write(fila, col, otros_ingresos_mensual[mes], formats['numero'])
                 col += 2
+            hoja.write(fila, col, sum(otros_ingresos_mensual), formats['numero'])
             # lineas
             fila += 1
             for line in otros_ingresos_lines:
@@ -473,6 +484,7 @@ class ReporteConciliacionCuadraticaWizard(models.TransientModel):
             for mes in range(0, 12):
                 hoja.write(fila, col, total_ingresos_mensual[mes], formats['row_totals_number'])
                 col += 2
+            hoja.write(fila, col, sum(total_ingresos_mensual), formats['row_totals_number'])
             fila += 1
             
             
@@ -481,7 +493,7 @@ class ReporteConciliacionCuadraticaWizard(models.TransientModel):
             fila += 1
             
             # --- Proveedores ---
-            hoja.merge_range(fila, 2, fila, 4,'Proveedores', formats['bold'])
+            hoja.merge_range(fila, 2, fila, 4,'PROVEEDORES', formats['bold'])
             fila += 1
 
             # --- Gastos Operativos
@@ -490,6 +502,7 @@ class ReporteConciliacionCuadraticaWizard(models.TransientModel):
             for mes in range(0, 12):
                 hoja.write(fila, col, gastos_operativos_mensual[mes], formats['numero'])
                 col += 2
+            hoja.write(fila, col, sum(gastos_operativos_mensual), formats['numero'])
             fila += 1
 
             # --- Anticipos
@@ -498,6 +511,7 @@ class ReporteConciliacionCuadraticaWizard(models.TransientModel):
             for mes in range(0, 12):
                 hoja.write(fila, col, anticipos_mensual[mes], formats['numero'])
                 col += 2
+            hoja.write(fila, col, sum(anticipos_mensual), formats['numero'])
             fila += 1
 
             # --- Prestamos
@@ -506,6 +520,7 @@ class ReporteConciliacionCuadraticaWizard(models.TransientModel):
             for mes in range(0, 12):
                 hoja.write(fila, col, prestamos_mensual[mes], formats['numero'])
                 col += 2
+            hoja.write(fila, col, sum(prestamos_mensual), formats['numero'])
             # lineas
             hoja.write(fila+1, 2, 'Nombre', formats['table_subtitle'])
             hoja.write(fila+1, 3, 'Banco', formats['table_subtitle'])
@@ -529,6 +544,7 @@ class ReporteConciliacionCuadraticaWizard(models.TransientModel):
             for mes in range(0, 12):
                 hoja.write(fila, col, dividendos_mensual[mes], formats['numero'])
                 col += 2
+            hoja.write(fila, col, sum(dividendos_mensual), formats['numero'])
             # lineas
             hoja.write(fila+1, 2, 'Nombre del socio', formats['table_subtitle'])
             hoja.write(fila+1, 3, 'Banco', formats['table_subtitle'])
@@ -545,12 +561,13 @@ class ReporteConciliacionCuadraticaWizard(models.TransientModel):
                 hoja.write(fila, 4, line['cuenta'])
                 hoja.write(fila, columna, line['monto'], formats['numero'])
                 fila += 1
-            hoja.write(fila, 2, "Agrupación")
-            col = 5
-            for mes in range(0, 12):
-                hoja.write(fila, col, otras_dividendos_mensual[mes], formats['numero'])
-                col += 2
-            fila += 1
+            if otras_dividendos_mensual:
+                hoja.write(fila, 2, "Agrupación")
+                col = 5
+                for mes in range(0, 12):
+                    hoja.write(fila, col, otras_dividendos_mensual[mes], formats['numero'])
+                    col += 2
+                fila += 1
             
             # --- Cuentas por pagar: Socios ---
             hoja.merge_range(fila, 2, fila, 4,'Cuentas por pagar socios (hoja adjunta)', formats['bold'])
@@ -558,6 +575,7 @@ class ReporteConciliacionCuadraticaWizard(models.TransientModel):
             for mes in range(0, 12):
                 hoja.write(fila, col, cxp_socios_mensual[mes], formats['numero'])
                 col += 2
+            hoja.write(fila, col, sum(cxp_socios_mensual), formats['numero'])
             # Hoja 4 - lineas
             hoja_4 = libro.add_worksheet('Cuentas por Pagar Socios')
             hoja_4.write(0, 0, 'Cuentas por Pagar Socios', formats['bold'])
@@ -580,6 +598,7 @@ class ReporteConciliacionCuadraticaWizard(models.TransientModel):
             for mes in range(0, 12):
                 hoja.write(fila, col, cxp_relacionadas_locales_mensual[mes], formats['numero'])
                 col += 2
+            hoja.write(fila, col, sum(cxp_relacionadas_locales_mensual), formats['numero'])
             # Hoja 5 - lineas
             hoja_5 = libro.add_worksheet('Cuentas por Relacionadas Locales')
             hoja_5.write(0, 0, 'Cuentas por Pagar Relacionadas Locales', formats['bold'])
@@ -602,6 +621,7 @@ class ReporteConciliacionCuadraticaWizard(models.TransientModel):
             for mes in range(0, 12):
                 hoja.write(fila, col, cxp_relacionadas_exterior_mensual[mes], formats['numero'])
                 col += 2
+            hoja.write(fila, col, sum(cxp_relacionadas_exterior_mensual), formats['numero'])
             # Hoja 6 - lineas
             hoja_6 = libro.add_worksheet('Cuentas por Relacionadas del Exterior')
             hoja_6.write(0, 0, 'Cuentas por Pagar Relacionadas del Exterior', formats['bold'])
@@ -624,6 +644,7 @@ class ReporteConciliacionCuadraticaWizard(models.TransientModel):
             for mes in range(0, 12):
                 hoja.write(fila, col, cxp_transfer_interempresa_mensual[mes], formats['numero'])
                 col += 2
+            hoja.write(fila, col, sum(cxp_transfer_interempresa_mensual), formats['numero'])
             # Hoja 7 - lineas
             hoja_7 = libro.add_worksheet('Cuentas por Pagar Transferencias Interempresa')
             hoja_7.write(0, 0, 'Cuentas por Pagar Transferencias Interempresa', formats['bold'])
@@ -644,6 +665,7 @@ class ReporteConciliacionCuadraticaWizard(models.TransientModel):
             for mes in range(0, 12):
                 hoja.write(fila, col, otros_egresos_mensual[mes], formats['numero'])
                 col += 2
+            hoja.write(fila, col, sum(otros_egresos_mensual), formats['numero'])
             # lineas
             fila += 1
             for line in otros_egresos_lines:
@@ -659,6 +681,7 @@ class ReporteConciliacionCuadraticaWizard(models.TransientModel):
             for mes in range(0, 12):
                 hoja.write(fila, col, total_egresos_mensual[mes], formats['row_totals_number'])
                 col += 2
+            hoja.write(fila, col, sum(total_egresos_mensual), formats['row_totals_number'])
             fila += 1
 
             # --- Ingresos menos egresos --- 
@@ -685,9 +708,10 @@ class ReporteConciliacionCuadraticaWizard(models.TransientModel):
             for mes in range(0, 12):
                 hoja.write(fila, col, otros_ajustes_mensual[mes], formats['numero'])
                 col += 2
+            hoja.write(fila, col, sum(otros_ajustes_mensual), formats['numero'])
             # lineas
             fila += 1
-            for line in self.otros_ajustes_ids:
+            for line in otros_ajustes:
                 columna = 5 + (line.date.month - 1) * 2
                 hoja.merge_range(fila, 2, fila, 4,  line.descripcion)
                 hoja.write(fila, columna, line.amount, formats['numero'])
@@ -707,6 +731,7 @@ class ReporteConciliacionCuadraticaWizard(models.TransientModel):
             for mes in range(0, 12):
                 hoja.write(fila, col, saldo_final_mensual[mes], formats['numero'])
                 col += 2
+            hoja.write(fila, col, sum(saldo_final_mensual), formats['numero'])
             fila += 1
             
             hoja.merge_range(fila, 2, fila, 4,'AJUSTES', formats['bold'])
@@ -717,7 +742,13 @@ class ReporteConciliacionCuadraticaWizard(models.TransientModel):
             for mes in range(0, 12):
                 hoja.write(fila, col, intereses_ganados_mensual[mes], formats['numero'])
                 col += 2
+            hoja.write(fila, col, sum(intereses_ganados_mensual), formats['numero'])
             fila += 1
+            for line in intereses_ganados:
+                columna = 5 + (line.date.month - 1) * 2
+                hoja.merge_range(fila, 2, fila, 4,  line.descripcion)
+                hoja.write(fila, columna, line.amount, formats['numero'])
+                fila += 1
 
             hoja.write(fila, 1, '( - )', formats['bold'])
             hoja.merge_range(fila, 2, fila, 4,'Notas de débito no operadas', formats['bold'])
@@ -725,14 +756,26 @@ class ReporteConciliacionCuadraticaWizard(models.TransientModel):
             for mes in range(0, 12):
                 hoja.write(fila, col, notas_debito_mensual[mes], formats['numero'])
                 col += 2
+            hoja.write(fila, col, sum(notas_debito_mensual), formats['numero'])
             fila += 1
+            for line in notas_debito:
+                columna = 5 + (line.date.month - 1) * 2
+                hoja.merge_range(fila, 2, fila, 4,  line.descripcion)
+                hoja.write(fila, columna, line.amount, formats['numero'])
+                fila += 1
 
-            hoja.merge_range(fila, 2, fila, 4,'Otros', formats['bold'])
+            hoja.merge_range(fila, 2, fila, 4,'Otros ajustes finales', formats['bold'])
             col = 6
             for mes in range(0, 12):
                 hoja.write(fila, col, ajustes_finales_mensual[mes], formats['numero'])
                 col += 2
+            hoja.write(fila, col, sum(ajustes_finales_mensual), formats['numero'])
             fila += 1
+            for line in ajustes_finales:
+                columna = 5 + (line.date.month - 1) * 2
+                hoja.merge_range(fila, 2, fila, 4,  line.descripcion)
+                hoja.write(fila, columna, line.amount, formats['numero'])
+                fila += 1
 
             # --- Saldo Conciliado --- 
             hoja.merge_range(fila, 2, fila, 4,'SALDO CONCILIADO', formats['row_totals_bold'])
