@@ -7,7 +7,7 @@
     'author': "aquíH",
     'website': "http://www.aquih.com",
     'category': 'Uncategorized',
-    'version': '1.0',
+    'version': '1.1',
     'depends': ['l10n_gt_extra'],
     'license': 'Other OSI approved licence',
     'data': [
