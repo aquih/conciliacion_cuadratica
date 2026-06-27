@@ -12,7 +12,7 @@
     'website': "http://www.aquih.com",
 
     'category': 'Uncategorized',
-    'version': '0.4',
+    'version': '0.4.1',
 
     'depends': ['l10n_gt_extra'],
 
