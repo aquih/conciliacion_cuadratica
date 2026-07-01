@@ -1,0 +1,236 @@
+<section class="oe_container">
+    <div class="oe_row oe_spaced">
+        <h2 class="oe_slogan">Conciliación Cuadrática</h2>
+        <p>Manual para generar el reporte Excel de conciliación bancaria mensual por cuenta.</p>
+    </div>
+</section>
+
+<section class="oe_container oe_dark">
+    <div class="oe_row oe_spaced">
+        <h3>1. Dónde está el reporte</h3>
+        <p><strong>Contabilidad → Informes → Reporte Conciliación Cuadrática</strong></p>
+        <ol>
+            <li>Seleccione el <strong>Diario</strong> bancario a reportar.</li>
+            <li>Seleccione el <strong>Año</strong>.</li>
+            <li>Clic en <strong>Reporte Excel</strong>.</li>
+            <li>Descargue el archivo generado en el campo <em>Archivo</em>.</li>
+        </ol>
+        <p>El Excel principal se llama <strong>Conciliacion Cuadrática</strong>. Algunas secciones incluyen hojas adjuntas con el detalle.</p>
+    </div>
+</section>
+
+<section class="oe_container">
+    <div class="oe_row oe_spaced">
+        <h3>2. Antes de generar el reporte</h3>
+        <p>Cada movimiento debe estar clasificado en uno de estos dos lugares:</p>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Origen en Odoo</th>
+                    <th>Menú</th>
+                    <th>Cuándo usarlo</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Pagos</strong></td>
+                    <td>Contabilidad → Clientes → Pagos<br/>Contabilidad → Proveedores → Pagos</td>
+                    <td>Cobros a clientes y pagos a proveedores registrados como pago.</td>
+                </tr>
+                <tr>
+                    <td><strong>Apuntes bancarios</strong></td>
+                    <td>Contabilidad → Tablero → Conciliación bancaria</td>
+                    <td>Movimientos del extracto que no son un pago de cliente/proveedor, o que requieren conciliación bancaria.</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h4>Campos obligatorios al clasificar</h4>
+        <p>En pagos y apuntes aparecen estos campos (después de la referencia):</p>
+        <ul>
+            <li><strong>Tipo de conciliación cuadrática</strong> — según la tabla de la sección 3.</li>
+            <li><strong>Cuenta de origen</strong> — obligatoria cuando hay tipo seleccionado (cuenta bancaria del contacto en <em>Contactos → Cuentas bancarias</em>).</li>
+        </ul>
+
+        <h4>Reglas generales</h4>
+        <ul>
+            <li>Los <strong>pagos</strong> deben estar <strong>Publicados</strong>, en el diario seleccionado y con fecha del año del reporte.</li>
+            <li>Los <strong>apuntes</strong> se toman del diario seleccionado con fecha hasta el 31/12 del año.</li>
+            <li>En apuntes: al <strong>conciliar</strong> se guarda la fecha de conciliación; eso define el mes en que cae el monto en el reporte.</li>
+            <li>Apuntes <strong>no conciliados</strong> al cierre del mes entran en <em>Depósitos en tránsito</em> (ingresos) o <em>Cheques en circulación</em> (egresos).</li>
+        </ul>
+    </div>
+</section>
+
+<section class="oe_container oe_dark">
+    <div class="oe_row oe_spaced">
+        <h3>3. Depósitos — de dónde sale cada línea</h3>
+        <table class="table table-bordered table-sm">
+            <thead>
+                <tr>
+                    <th>Línea del reporte</th>
+                    <th>Origen</th>
+                    <th>Cómo clasificarlo</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Saldo inicial según banco</td>
+                    <td>Contabilidad</td>
+                    <td>Automático desde la cuenta contable del diario. No requiere acción.</td>
+                </tr>
+                <tr>
+                    <td>CxC clientes locales</td>
+                    <td>Pagos de clientes</td>
+                    <td>Pago de cliente (recibido). <strong>Sin</strong> tipo de conciliación. Contacto de Guatemala o sin país.</td>
+                </tr>
+                <tr>
+                    <td>CxC clientes del exterior</td>
+                    <td>Pagos de clientes</td>
+                    <td>Pago de cliente (recibido). <strong>Sin</strong> tipo de conciliación. Contacto con país distinto de Guatemala.</td>
+                </tr>
+                <tr>
+                    <td>CxC relacionadas locales y del exterior</td>
+                    <td>Pagos de clientes</td>
+                    <td>Tipo: <strong>CXC Interempresa</strong> + cuenta de origen.</td>
+                </tr>
+                <tr>
+                    <td>CxC a socios</td>
+                    <td>Apuntes</td>
+                    <td>Tipo: <strong>CXC Socios</strong> + cuenta de origen.</td>
+                </tr>
+                <tr>
+                    <td>CxC a empleados</td>
+                    <td>Pagos y apuntes</td>
+                    <td>Tipo: <strong>CXC Empleados</strong> + cuenta de origen.</td>
+                </tr>
+                <tr>
+                    <td>Anticipo de clientes</td>
+                    <td>Pagos y apuntes</td>
+                    <td>Tipo: <strong>CXC Anticipo a Clientes</strong> + cuenta de origen.</td>
+                </tr>
+                <tr>
+                    <td>Intereses ganados</td>
+                    <td>Apuntes</td>
+                    <td>Tipo: <strong>CXC Intereses Ganados</strong> + cuenta de origen.</td>
+                </tr>
+                <tr>
+                    <td>Transferencia de fondos entre cuentas (ingreso)</td>
+                    <td>Apuntes</td>
+                    <td>Tipo: <strong>CXC Transferencias Interempresa</strong> + cuenta de origen.</td>
+                </tr>
+                <tr>
+                    <td>Otros ingresos</td>
+                    <td>Pagos de clientes</td>
+                    <td>Tipo: <strong>CXC Otros Ingresos</strong> + cuenta de origen.</td>
+                </tr>
+            </tbody>
+        </table>
+        <p><strong>Total A — Depósitos del período:</strong> suma de todas las líneas anteriores más el saldo inicial.</p>
+    </div>
+</section>
+
+<section class="oe_container">
+    <div class="oe_row oe_spaced">
+        <h3>4. Egresos — de dónde sale cada línea</h3>
+        <table class="table table-bordered table-sm">
+            <thead>
+                <tr>
+                    <th>Línea del reporte</th>
+                    <th>Origen</th>
+                    <th>Cómo clasificarlo</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Gastos operativos</td>
+                    <td>Pagos a proveedores</td>
+                    <td>Tipo: <strong>CXP Gastos Operativos</strong> + cuenta de origen.</td>
+                </tr>
+                <tr>
+                    <td>Pagos anticipados</td>
+                    <td>Pagos y apuntes</td>
+                    <td>Tipo: <strong>CXP Anticipos</strong> + cuenta de origen.</td>
+                </tr>
+                <tr>
+                    <td>Pago a préstamos</td>
+                    <td>Apuntes</td>
+                    <td>Tipo: <strong>CXP Prestamos</strong> + cuenta de origen.</td>
+                </tr>
+                <tr>
+                    <td>Pago de dividendos</td>
+                    <td>Pagos y apuntes</td>
+                    <td>Tipo: <strong>CXP Dividendos</strong> + cuenta de origen.</td>
+                </tr>
+                <tr>
+                    <td>CxP socios</td>
+                    <td>Apuntes</td>
+                    <td>Tipo: <strong>CXP Socios</strong> + cuenta de origen.</td>
+                </tr>
+                <tr>
+                    <td>CxP relacionadas locales</td>
+                    <td>Apuntes</td>
+                    <td>Tipo: <strong>CXP Relacionadas Locales</strong> + cuenta de origen.</td>
+                </tr>
+                <tr>
+                    <td>CxP relacionadas del exterior</td>
+                    <td>Apuntes</td>
+                    <td><strong>Sin</strong> tipo de conciliación. Contacto extranjero y monto negativo (egreso).</td>
+                </tr>
+                <tr>
+                    <td>Transferencia de fondos entre cuentas (egreso)</td>
+                    <td>Apuntes</td>
+                    <td>Tipo: <strong>CXP Transferencias Interempresa</strong> + cuenta de origen.</td>
+                </tr>
+                <tr>
+                    <td>Otros egresos</td>
+                    <td>Pagos a proveedores</td>
+                    <td>Tipo: <strong>CXP Otros Egresos</strong> + cuenta de origen.</td>
+                </tr>
+            </tbody>
+        </table>
+        <p><strong>Total B — Egresos:</strong> suma de todas las líneas de egresos.</p>
+        <p><strong>Saldo final bancario (A − B):</strong> calculado automáticamente.</p>
+    </div>
+</section>
+
+<section class="oe_container oe_dark">
+    <div class="oe_row oe_spaced">
+        <h3>5. Ajustes al final del reporte</h3>
+        <table class="table table-bordered table-sm">
+            <thead>
+                <tr>
+                    <th>Línea</th>
+                    <th>Origen</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>(+) Depósitos en tránsito</td>
+                    <td>Apuntes de ingreso <strong>no conciliados</strong> (CXC socios, intereses ganados, transferencias interempresa ingreso, etc.).</td>
+                </tr>
+                <tr>
+                    <td>(−) Cheques en circulación</td>
+                    <td>Apuntes de egreso <strong>no conciliados</strong> (préstamos, CxP socios, CxP relacionadas, transferencias egreso, etc.).</td>
+                </tr>
+                <tr>
+                    <td>Saldo final según libros</td>
+                    <td>Automático desde movimientos contables de la cuenta del diario.</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</section>
+
+<section class="oe_container">
+    <div class="oe_row oe_spaced">
+        <h3>6. Checklist antes de generar</h3>
+        <ol>
+            <li>Todos los cobros y pagos del año están <strong>publicados</strong> en el diario correcto.</li>
+            <li>Cada movimiento tiene el <strong>tipo de conciliación</strong> correcto (o sin tipo solo en CxC local/exterior de clientes y CxP exterior).</li>
+            <li>Donde hay tipo, la <strong>cuenta de origen</strong> está llena.</li>
+            <li>Los apuntes del extracto están <strong>conciliados</strong> cuando corresponda (para que caigan en el mes correcto).</li>
+            <li>Revise que el diario tenga cuenta bancaria y cuenta contable configuradas.</li>
+        </ol>
+    </div>
+</section>
